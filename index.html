@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>今日の運勢 - おみくじアプリ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      transition: background-color 0.5s; /* 色がふわっと変わるアニメーション */
+    }
+    
+    #resultImage {
+      display: none;
+      max-width: 400px;
+      margin: 0 auto 30px;
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    #resultImage img {
+      width: 100%;
+      height: auto;
+    }
+    
+    .button-container {
+      position: relative;
+      height: auto;
+    }
+    
+    button {
+      font-size: 20px;
+      padding: 10px 30px;
+      cursor: pointer;
+      transition: transform 0.5s ease-out, margin-top 0.5s ease-out;
+    }
+    
+    button.slide-down {
+      transform: translateY(130px);
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>今日の運勢</h1>
+  <p>ボタンをクリックしておみくじの結果を見よう！</p>
+  
+  <div id="resultImage"></div>
+  
+  <div class="button-container">
+    <button id="btn">おみくじを引く！</button>
+  </div>
+
+  <script>
+    const btn = document.getElementById('btn');
+    const resultImage = document.getElementById('resultImage');
+
+    // パターン（運勢、色、画像ファイル）のリストを用意
+    const patterns = [
+      { label: '大吉！', color: '#ffcccc', image: 'daikichi.jpeg' },      // パターン0
+      { label: '中吉', color: '#ccffcc', image: 'cyukichi.jpeg' },        // パターン1
+      { label: '小吉', color: '#ccccff', image: 'syokichi.jpeg' },        // パターン2
+      { label: '凶', color: '#ffffcc', image: 'kyou.jpeg' }               // パターン3
+    ];
+
+    btn.addEventListener('click', () => {
+      // 0〜3の数字をランダムに選ぶ
+      const n = Math.floor(Math.random() * patterns.length);
+
+      // 選ばれたパターンのデータを取得
+      const selectedPattern = patterns[n];
+
+      // 画面（DOM）を更新
+      document.body.style.backgroundColor = selectedPattern.color;
+      btn.textContent = selectedPattern.label;
+      
+      // 画像を表示
+      resultImage.innerHTML = `<img src="${selectedPattern.image}" alt="${selectedPattern.label}">`;
+      resultImage.style.display = 'block';
+      
+      // ボタンをスライドダウン
+      btn.classList.add('slide-down');
+      
+      console.log(`今はパターン${n}が表示されています`);
+    });
+  </script>
+</body>
+</html>
